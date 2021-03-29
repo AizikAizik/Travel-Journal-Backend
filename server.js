@@ -5,7 +5,8 @@ import cors from "cors";
 import helmet from "helmet";
 
 //import user defined modules here
-import connectDB from "./config/db.js"
+import connectDB from "./config/db.js";
+import userRoute from "./routes/userRoutes.js";
 
 // import error middlewares here
 import { notFound, serverError } from "./middlewares/errorMiddleware.js"
@@ -26,6 +27,9 @@ app.use(helmet());
 app.get('/', (req, res) => {
     res.send("Welcome to the API server!")
 })
+
+//user routes
+app.use('/api/user', userRoute)
 
 // run error middlewares at the bottom of the file
 app.use(notFound);

@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import bcrypt from "bcryptjs";
 
 const { Schema } = mongoose;
 
@@ -27,6 +28,11 @@ const userSchema = new Schema({
 }, {
     timestamps: true
 })
+
+// add middleware for verifying hashed password
+userSchema.methods.matchPassword = async function(enteredPassword) {
+    return await bcrypt.compare(enteredPassword,this.password);
+}
 
 const User = mongoose.model('User', userSchema);
 
