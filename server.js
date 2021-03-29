@@ -4,9 +4,15 @@ import dotenv from "dotenv";
 import cors from "cors";
 import helmet from "helmet";
 
+//import user defined modules here
+import connectDB from "./config/db.js"
+
 // import error middlewares here
 import { notFound, serverError } from "./middlewares/errorMiddleware.js"
 dotenv.config();
+
+// connect to the mongodb database
+connectDB();
 
 const app = express();
 
