@@ -6,8 +6,13 @@ import { generateToken } from "../utils/token.js";
 // DESC controller for fetching all users in the database
 // private route for admin
 const fetchAllUsers = asyncHandler(async (req, res) => {
-  const users = await User.find({});
-  res.send(users);
+  if (req.user.isAdmin) {
+    const users = await User.find({});
+    res.send(users);
+  } else {
+    res.status(401);
+    throw new Error("Admin only can view this");
+  }
 });
 
 // POST /api/user/login

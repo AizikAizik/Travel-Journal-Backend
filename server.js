@@ -7,6 +7,7 @@ import helmet from "helmet";
 //import user defined modules here
 import connectDB from "./config/db.js";
 import userRoute from "./routes/userRoutes.js";
+import journalRoute from "./routes/journalRoutes.js"
 
 // import error middlewares here
 import { notFound, serverError } from "./middlewares/errorMiddleware.js"
@@ -29,7 +30,8 @@ app.get('/', (req, res) => {
 })
 
 //user routes
-app.use('/api/user', userRoute)
+app.use('/api/user', userRoute);
+app.use('/api/journal', journalRoute)
 
 // run error middlewares at the bottom of the file
 app.use(notFound);
