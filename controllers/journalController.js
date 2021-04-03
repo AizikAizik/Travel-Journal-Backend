@@ -30,4 +30,32 @@ const addTravelJournalEntry = asyncHandler(
     }
 )
 
-export {fetchAllJornalEntries, addTravelJournalEntry};
+// DELETE /api/journal/:id
+// DESC controller for deleting a specific journal
+// private route for logged in users
+const deleteJournalEntry = asyncHandler(
+    async (req, res) =>{
+        const { id } = req.params;
+        const journal = await Journal.findById(id);
+
+        if(journal){
+            if(req.user.id.toString() === journal.user.toString()){
+                await Journal.deleteOne({_id: id})
+                res.json({message: 'Entry deleted succesfully'});
+            }else{
+                res.status(401);
+                throw new Error('Unauthorized!! you are not the owner of this journal');
+            }         
+        }else{
+            res.status(404).json({
+                message: `Entry of the id ${id} does not exist`
+            })
+        }
+    }
+)
+
+export {
+    fetchAllJornalEntries,
+    addTravelJournalEntry,
+    deleteJournalEntry
+};
