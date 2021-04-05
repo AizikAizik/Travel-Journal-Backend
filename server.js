@@ -21,7 +21,7 @@ const app = express();
 // run utility middlewares
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(cors());
+app.use(cors({origin : 'http://localhost:3000'}));
 app.use(helmet());
 
 //home route
