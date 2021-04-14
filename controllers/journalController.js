@@ -39,7 +39,7 @@ const deleteJournalEntry = asyncHandler(
         const journal = await Journal.findById(id);
 
         if(journal){
-            if(req.user.id.toString() === journal.user.toString()){
+            if(req.user.id.toString() === journal.user.toString() || req.user.isAdmin){
                 await Journal.deleteOne({_id: id})
                 res.json({message: 'Entry deleted succesfully'});
             }else{
@@ -47,9 +47,8 @@ const deleteJournalEntry = asyncHandler(
                 throw new Error('Unauthorized!! you are not the owner of this journal');
             }         
         }else{
-            res.status(404).json({
-                message: `Entry of the id ${id} does not exist`
-            })
+            res.status(404);
+            throw new Error(`Entry of the id ${id} does not exist`);
         }
     }
 )
